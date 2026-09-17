@@ -28,14 +28,39 @@ const readline = require('readline-sync');
 
 const hasTorch = true;
 const hasMap = false;
-const hasSword = true;
+const hasSword = false;
 const hasRaft = false;
+const isStealthy = false;
 
 console.log("You see two paths: one leads to the mountains, the other to the village.");
 const choice = readline.question("Do you go to the 'mountains' or the 'village'?");
 
 if (choice === "mountains" && hasTorch) {
   console.log("You safely navigate through the dark mountains.");
+  console.log("You see two paths: one leads to a cave, the other to a river.");
+  const choice = readline.question("Do you go to the 'cave' or the 'river'?");
+  if (choice === "river" && hasRaft) {
+    console.log("You cross the river with your raft.");
+  }
+  else if (choice === "river" && !hasRaft) {
+    console.log("You're not able to cross without a raft. You decide to turn back.");
+  }
+  else if (choice === "cave" && hasSword) {
+    console.log("You enter the cave and encounter a troll. Prepare for battle!");
+  }
+  else if (choice === "cave" && !hasSword) {
+    console.log("You enter the cave and encounter a troll.");
+    const choice = readline.question("Do you try to sneak past the troll? ('yes' or 'no')");
+    if (choice === 'yes' && isStealthy) {
+      console.log("You manage to sneak past the troll and head further into the cave.")
+    }
+    else if (choice === 'yes' && !isStealthy) {
+      console.log("You alert the troll to your presence. You decide to run out of the cave.")
+    }
+    else if (choice === 'no') {
+      console.log("You decide to head out of the cave.")
+    }
+  }
 } else if (choice === "mountains" && !hasTorch) {
   console.log("It's too dark to proceed. You decide to turn back.");
 } else if (choice === "village" || hasMap) {
